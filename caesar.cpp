@@ -20,10 +20,10 @@ string caesar(int charnum, string input){
 	return newinput;
 }
 
-int main(){
+int main(int argc, char argv[]){
 	string input = "";
 	getline(cin, input);
-	int charnum = 3;
+	int charnum = argv[1];
 	string output = caesar(charnum, input);
 	cout << output << "\n";
 }
