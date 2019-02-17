@@ -20,7 +20,7 @@ string caesar(int charnum, string input){
 	return newinput;
 }
 
-int main(int argc, char argv[]){
+int main(int argc, int argv[]){
 	string input = "";
 	getline(cin, input);
 	int charnum = argv[1];
