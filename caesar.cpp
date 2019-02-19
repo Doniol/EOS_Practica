@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
 using namespace std;
 
 string caesar(int charnum, string input){
@@ -25,14 +26,15 @@ string caesar(int charnum, string input){
 	return newinput;
 }
 
-<<<<<<< HEAD
-int main(){
-=======
-int main(int argc, int argv[]){
->>>>>>> 3cf025587f5f65597ec8f7636250b16b7fa66697
-	string input = "";
-	getline(cin, input);
-	int charnum = 6;
-	string output = caesar(charnum, input);
-	cout << output << "\n";
+int main(int argc,char* argv[]){
+	string input = " ";
+	string line = "";
+	while(input != ""){
+		getline(cin, input);
+		line += input;
+		line += "\n";
+	}
+	int charnum = atoi(argv[1]);
+	string output = caesar(charnum, line);
+	cout << output;
 }
