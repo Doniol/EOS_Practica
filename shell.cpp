@@ -14,10 +14,10 @@ vector<string> ls(){
 	string path = "";
 	cout << "Enter path: ";
 	cin >> path;
-	string command = "./ls.ps";
-	command = command  + " " + path;
+	string command = "ls $1 ";
+	command += path;
 	cout << command;
-	system(command);
+	system(command.c_str());
 }
 
 string find(string name){
