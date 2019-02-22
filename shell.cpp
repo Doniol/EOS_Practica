@@ -42,7 +42,7 @@ void ls(){
 	wait(&waitnr);
 }
 
-string find(string name){
+void find(string name){
 	
 }
 
