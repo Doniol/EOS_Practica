@@ -7,11 +7,27 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <cstring>
 using namespace std;
 
 
-void new_file(string filename, string text){
-	
+void new_file(){
+	string filename = "";
+	cout << "Enter filename: ";
+	cin >> filename;
+	string path = "/home/hu/" + filename;
+	creat(path.c_str(), S_IRWXO | S_IRWXU);
+	string text = "";
+	cout << "\nEnter text: ";
+	cin.ignore();
+	getline(cin, text);
+	text += "\n";
+	int fd  = open(path.c_str(), O_RDWR | O_EXCL);
+	const void * input = text.c_str();
+	write(fd, input, strlen(text.c_str()));
+	close(fd);
 }
 
 void ls(){
@@ -38,13 +54,7 @@ void command_run(){
 	string command = "";
 	cin >> command;
 	if(command == "new_file"){
-		string filename = "";
-		cout << "Enter filename: ";
-		getline(cin, filename);
-		string text = "";
-		cout << "\nEnter text: ";
-		getline(cin, text);
-		new_file(filename, text);
+		new_file();
 	} else if(command == "ls"){
 		ls();
 	} else if(command == "find"){
