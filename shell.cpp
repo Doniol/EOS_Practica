@@ -3,6 +3,10 @@
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h> 
+#include <unistd.h>
+#include <stdarg.h>
+#include <sys/wait.h>
 using namespace std;
 
 
@@ -10,14 +14,16 @@ void new_file(string filename, string text){
 	
 }
 
-vector<string> ls(){
+void ls(){
 	string path = "";
 	cout << "Enter path: ";
 	cin >> path;
-	string command = "ls $1 ";
-	command += path;
-	cout << command;
-	system(command.c_str());
+	int pid = fork();
+	if (pid == 0){
+		execlp("/bin/ls", "ls", "-la", path.c_str(), NULL);
+	}
+	int waitnr = 2;
+	wait(&waitnr);
 }
 
 string find(string name){
@@ -28,7 +34,7 @@ void python(string command){
 	
 }
 
-int main(){
+void command_run(){
 	string command = "";
 	cin >> command;
 	if(command == "new_file"){
@@ -52,4 +58,8 @@ int main(){
 		getline(cin, pythoncommand);
 		python(pythoncommand);
 	}
+}
+
+int main(){
+	command_run();
 }
