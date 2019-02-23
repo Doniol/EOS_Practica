@@ -12,6 +12,8 @@
 #include <cstring>
 using namespace std;
 
+#define die(e) do { fprintf(stderr, "%s\n", e); exit(EXIT_FAILURE); } while (0);
+
 
 void new_file(){
 	string filename = "";
@@ -36,14 +38,25 @@ void ls(){
 	cin >> path;
 	int pid = fork();
 	if (pid == 0){
-		execlp("/bin/ls", "ls", "-la", path.c_str(), NULL);
+		execlp("ls", "ls", "-la", path.c_str(), NULL);
 	}
 	int waitnr = 2;
 	wait(&waitnr);
 }
 
-void find(string name){
-	
+void find(){
+	string name = "";
+	string text = "";
+	cout << "Enter filename: ";
+	cin >> name;
+	cout << "Enter string: ";
+	cin >> text;
+	int pid = fork();
+	if(pid == 0) {
+	    	execlp("find", "find", name.c_str(), NULL);
+	}
+    	string found = ;
+	cout << execlp("/bin/grep", "-r", text, found, NULL);
 }
 
 void python(string command){
@@ -58,10 +71,7 @@ void command_run(){
 	} else if(command == "ls"){
 		ls();
 	} else if(command == "find"){
-		string name = "";
-		cout << "Enter filename: ";
-		getline(cin, name);
-		find(name);
+		find();
 	} else if(command == "python"){
 		string pythoncommand = "";
 		cout << "Enter python command: ";
