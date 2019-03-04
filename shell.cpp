@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <cstring>
+#include <termios.h>
 using namespace std;
 
 #define die(e) do { fprintf(stderr, "%s\n", e); exit(EXIT_FAILURE); } while (0);
@@ -51,12 +52,26 @@ void find(){
 	cin >> name;
 	cout << "Enter string: ";
 	cin >> text;
+	int fd[2];
+	pipe(fd);
 	int pid = fork();
 	if(pid == 0) {
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
 	    	execlp("find", "find", name.c_str(), NULL);
+	} else {
+		int pid = fork();
+		if (pid == 0){
+			dup2(fd[0], STDIN_FILENO);
+			close(fd[0]);
+			execlp("/bin/grep", "grep", text.c_str(), NULL);
+		} else {
+			close(fd[1]);
+			close(fd[0]);
+			int waitnr = 2;
+			wait(&waitnr);
+		}
 	}
-    	string found = ;
-	cout << execlp("/bin/grep", "-r", text, found, NULL);
 }
 
 void python(string command){
