@@ -64,7 +64,7 @@ void find(){
 		if (pid == 0){
 			dup2(fd[0], STDIN_FILENO);
 			close(fd[0]);
-			execlp("/bin/grep", "grep", text.c_str(), NULL);
+			execl("/bin/sh", "grep", text, name, NULL); //cant open ????
 		} else {
 			close(fd[1]);
 			close(fd[0]);
