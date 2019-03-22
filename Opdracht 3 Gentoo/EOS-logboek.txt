@@ -1,0 +1,82 @@
+-Booted Gentoo
+-Pressed Enter
+-Skipped boot options
+
+-ifconfig shows the wifi-network the pc is connected to
+-ping command works (used to test the internet-connection)
+
+-I chose GPT as my partition table because its not only the recommended but also, as far as i can see, the better one
+-I set the label of /dev/sda to GPT using parted and mklabel
+-I set the size unit to MB
+-I created a partition for the GRUB2 boot loader with a size of 2MB of the primary type
+-I created 3 more partitions: boot with 128MB, swap with 512MB and root with all the remaining memory, all of which are of the primary type
+-I flagged the boot partition with the flag 'boot'
+-I printed all the partitions to check whether theyre all ready, they are
+
+-For the filesystem i chose ext4 for everything except boot because it has more features than both ext2 and ext3 and offers generally better performance
+-I chose the vfat-filesystem for boot because it's necessary.
+-I increased the amount of reserved nodes for smaller partitions
+-I applied the ext4 filesystem to all partitions
+-I activated the swap partition and mounted the root partition
+
+-I set the date and time
+-I installed a stage 3 tarball in /mnt/gentoo using wget http://distfiles.gentoo.org/releases/amd64/autobuilds/20190310T214503Z/stage3-amd64-nomultilib-20190310T214503Z.tar.xz
+-Afterwards i unpacked the stage tarball using tar xpvf
+
+-In CFLAGS and CXXFLAGS i used the same flags which are as follows: 
+	-O2, which specifies the gcc optimatisation class flag and is the recommended default
+	-march, which specifies the name of the target architecture, i used 'native' as that tells the compiler to select the target architecture of the current system
+	-pipe, which makes it use pipes rather than temporary files for communication between various stages of compilation
+-In MAKEOPTS i used the -j2 flag to define how many parallel compilations should occur when installing a package
+
+-I selected Netherlands, Universiteit Twente as mirror
+-I copied DNS info
+-I mounted the necessary filesystems
+	-VirtualBox crashed, i continued with a new VM doing everything over
+-I entered the new environment, mounted the boot partition and configured and updated portage.
+-I chose the right profile (default/linux/amd64/17.0/no-multilib (stable))
+-I updated the @world so the system can apply any updates or USE flag changes since the tarball was build.
+-I used the default USE configuration.
+-I selected the "Europe" timezone.
+-I selected en_US.utf8 as locale.
+
+-I installed the sys-kernel source.
+-I selected the following setting because they were the recommended ones and sounded reasonable to me:
+	-[*] Maintain a devtmpfs filesystem to mount at /dev (so that critical device files are already available early in the boot process)
+    	-[*]   Automount devtmpfs at /dev, after the kernel mounted the rootfs (so that critical device files are already available early in the boot process)
+	-<*> SCSI disk support
+	-<*> The Extended 4 (ext4) filesystem (filesystem)
+	-<*> PPP (point-to-point protocol) support (to connect to the internet)
+    	-<*>   PPP support for async serial ports (to connect to the internet)
+    	-<*>   PPP support for sync tty ports (to connect to the internet)
+	-[*] Symmetric multi-processing support (for cpus with multiple cores)
+	-<*>   Generic HID driver (for USB input)
+    	-[*]   Battery level reporting for HID devices (for USB input)
+	-<*> USB HID transport layer (for USB input)
+	-<*>     xHCI HCD (USB 3.0) support (for USB input)
+    	-<*>     EHCI HCD (USB 2.0) support (for USB input)
+    	-<*>     OHCI HCD (USB 1.1) support (for USB input)
+	-[*]   AMD MCE Features
+	-(*) Generic-x86-64
+	-[*] IA32 Emulation (for 32-bit programs)
+	-[*] Advanced partition selection (enable GPT partition)
+      	-[*] EFI GUID Partition support (enable GPT partition)
+-I compiled and installed the kernel
+
+-Installed firmware
+-Configured fstab
+-Configured Network
+-Rc-update: OpenRC is a dependency-based init system that maintains compatibility with the system provided init program, normally located in /sbin/init. It does not function as a replacement for the /sbin/init file. OpenRC is 100% compatible with Gentoo init scripts, which means a solution can be found to run the dozens of daemons in the main Gentoo repository. OpenRC, however, is not designed to be exclusively used by Gentoo Linux and can be used on other distributions and BSD systems.
+ Init-scripts: several scripts located in /etc/init.d/, which will start the services needed in order to have a successfully booted system. 
+-Configured hosts file and system info.
+-System logger: saves things that happen on the system in logs.
+-Cron daemon: executes scheduled commands.
+-File indexer: exists in order to index the file system to provide faster file location capabilities.
+
+-Configure bootloader: I chose GRUB2 because it offers more features than LILO.
+-The first few times the bootloader refused to install because the boot-partition wasn't configured with the vfat-filesystem, I fixed this later on.
+-After fixing this I got an error that said that the boot-partition was read-only, I tried multiple solutions I found on the internet but none of them helped. So I got stuck here and couldn't continue.
+
+-Installed desktop environment/other software: none.
+
+
