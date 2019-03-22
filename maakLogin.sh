@@ -19,5 +19,6 @@ do
 	echo "Invalid Password!"
 	read PASS
 done
-echo "$USERNAME - $PASS" >> /home/hu/$1.txt
+echo "$USERNAME" >> /home/hu/$1.txt
+echo $PASS | md5sum >> /home/hu/$1.txt
 echo "Account details saved in: /home/hu/$1.txt"
