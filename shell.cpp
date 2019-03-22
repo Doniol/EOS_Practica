@@ -41,8 +41,7 @@ void ls(){
 	if (pid == 0){
 		execlp("ls", "ls", "-la", path.c_str(), NULL);
 	}
-	int waitnr = 2;
-	wait(&waitnr);
+	wait(NULL);
 }
 
 void find(){
@@ -65,15 +64,13 @@ void find(){
 		} else {
 			close(fd[1]);
 			close(fd[0]);
-			int waitnr = 2;
-			wait(&waitnr);
+			wait(NULL);
 		}
 	}
 }
 
 void python(){
-  	pid_t pid = fork();
-  	int status;
+  	int pid = fork();
   	if (pid == 0){
     		execlp("python", "python", NULL);
   	}else{
