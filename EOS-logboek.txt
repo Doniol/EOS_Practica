@@ -13,7 +13,8 @@
 -I flagged the boot partition with the flag 'boot'
 -I printed all the partitions to check whether theyre all ready, they are
 
--For the filesystem i chose ext4 because it has more features than both ext2 and ext3 and offers generally better performance
+-For the filesystem i chose ext4 for everything except boot because it has more features than both ext2 and ext3 and offers generally better performance
+-I chose the vfat-filesystem for boot because it's necessary.
 -I increased the amount of reserved nodes for smaller partitions
 -I applied the ext4 filesystem to all partitions
 -I activated the swap partition and mounted the root partition
@@ -21,6 +22,7 @@
 -I set the date and time
 -I installed a stage 3 tarball in /mnt/gentoo using wget http://distfiles.gentoo.org/releases/amd64/autobuilds/20190310T214503Z/stage3-amd64-nomultilib-20190310T214503Z.tar.xz
 -Afterwards i unpacked the stage tarball using tar xpvf
+
 -In CFLAGS and CXXFLAGS i used the same flags which are as follows: 
 	-O2, which specifies the gcc optimatisation class flag and is the recommended default
 	-march, which specifies the name of the target architecture, i used 'native' as that tells the compiler to select the target architecture of the current system
@@ -39,7 +41,7 @@
 -I selected en_US.utf8 as locale.
 
 -I installed the sys-kernel source.
--I selected the following setting because they were the recommended ones:
+-I selected the following setting because they were the recommended ones and sounded reasonable to me:
 	-[*] Maintain a devtmpfs filesystem to mount at /dev (so that critical device files are already available early in the boot process)
     	-[*]   Automount devtmpfs at /dev, after the kernel mounted the rootfs (so that critical device files are already available early in the boot process)
 	-<*> SCSI disk support
@@ -65,14 +67,16 @@
 -Configured fstab
 -Configured Network
 -Rc-update: OpenRC is a dependency-based init system that maintains compatibility with the system provided init program, normally located in /sbin/init. It does not function as a replacement for the /sbin/init file. OpenRC is 100% compatible with Gentoo init scripts, which means a solution can be found to run the dozens of daemons in the main Gentoo repository. OpenRC, however, is not designed to be exclusively used by Gentoo Linux and can be used on other distributions and BSD systems.
- Init: several scripts located in /etc/init.d/, which will start the services needed in order to have a successfully booted system. 
+ Init-scripts: several scripts located in /etc/init.d/, which will start the services needed in order to have a successfully booted system. 
 -Configured hosts file and system info.
 -System logger: saves things that happen on the system in logs.
 -Cron daemon: executes scheduled commands.
 -File indexer: exists in order to index the file system to provide faster file location capabilities.
+
 -Configure bootloader: I chose GRUB2 because it offers more features than LILO.
+-The first few times the bootloader refused to install because the boot-partition wasn't configured with the vfat-filesystem, I fixed this later on.
+-After fixing this I got an error that said that the boot-partition was read-only, I tried multiple solutions I found on the internet but none of them helped. So I got stuck here and couldn't continue.
 
-
-
+-Installed desktop environment/other software: none.
 
 
